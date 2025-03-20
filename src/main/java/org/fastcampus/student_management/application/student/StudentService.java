@@ -22,8 +22,13 @@ public class StudentService {
         .orElseThrow(() -> new IllegalArgumentException("해당하는 학생이 없습니다."));
   }
 
-  public void activateStudent(String name) {
-    // TODO: 과제 구현 부분
+  public boolean activateStudent(String name) {
+    try {
+      return this.getStudent(name).isActivate();
+    } catch (IllegalArgumentException e) {
+      // 예외 로깅 또는 다른 처리
+      return false; // 또는 예외를 다시 던지거나 다른 적절한 처리
+    }
   }
 
   public void deactivateStudent(String name) {

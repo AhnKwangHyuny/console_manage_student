@@ -25,8 +25,24 @@ public class CourseService {
   }
 
   public List<CourseInfoDto> getCourseDayOfWeek(DayOfWeek dayOfWeek) {
-    // TODO: 과제 구현 부분
-    return new ArrayList<>();
+
+    List<Course> courses = courseRepository.getCourseDayOfWeek(dayOfWeek);
+    List<CourseInfoDto> courseInfoDtos = new ArrayList<>();
+
+    for (Course course : courses) {
+
+      CourseInfoDto courseInfoDto = new CourseInfoDto(
+              course.getCourseName(),
+              course.getFee(),
+              course.getDayOfWeek().name(),
+              course.getStudentName(),
+              course.getCourseTime()
+      );
+
+      courseInfoDtos.add(courseInfoDto);
+    }
+
+    return courseInfoDtos;
   }
 
   public void changeFee(String studentName, int fee) {
