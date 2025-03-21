@@ -4,6 +4,8 @@ import org.fastcampus.student_management.application.student.dto.StudentInfoDto;
 import org.fastcampus.student_management.domain.Student;
 import org.fastcampus.student_management.repo.StudentRepository;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class StudentService {
 
   private final StudentRepository studentRepository;
@@ -22,16 +24,16 @@ public class StudentService {
         .orElseThrow(() -> new IllegalArgumentException("해당하는 학생이 없습니다."));
   }
 
-  public boolean activateStudent(String name) {
-    try {
-      return this.getStudent(name).isActivate();
-    } catch (IllegalArgumentException e) {
-      // 예외 로깅 또는 다른 처리
-      return false; // 또는 예외를 다시 던지거나 다른 적절한 처리
-    }
+  public void activateStudent(String name) {
+    // 학생이 존재하는지
+    Student student = this.getStudent(name);
+    student.activate();
   }
 
+
   public void deactivateStudent(String name) {
-    // TODO: 과제 구현 부분
+    Student student = this.getStudent(name);
+
+    student.deactivate();
   }
 }

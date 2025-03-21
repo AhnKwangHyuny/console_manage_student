@@ -5,6 +5,7 @@ import java.util.List;
 import org.fastcampus.student_management.application.course.dto.CourseInfoDto;
 import org.fastcampus.student_management.application.student.StudentService;
 import org.fastcampus.student_management.domain.Course;
+import org.fastcampus.student_management.domain.CourseFee;
 import org.fastcampus.student_management.domain.DayOfWeek;
 import org.fastcampus.student_management.domain.Student;
 import org.fastcampus.student_management.repo.CourseRepository;
@@ -27,25 +28,14 @@ public class CourseService {
   public List<CourseInfoDto> getCourseDayOfWeek(DayOfWeek dayOfWeek) {
 
     List<Course> courses = courseRepository.getCourseDayOfWeek(dayOfWeek);
-    List<CourseInfoDto> courseInfoDtos = new ArrayList<>();
 
-    for (Course course : courses) {
+    return courses.stream().map(CourseInfoDto::new).toList();
 
-      CourseInfoDto courseInfoDto = new CourseInfoDto(
-              course.getCourseName(),
-              course.getFee(),
-              course.getDayOfWeek().name(),
-              course.getStudentName(),
-              course.getCourseTime()
-      );
-
-      courseInfoDtos.add(courseInfoDto);
-    }
-
-    return courseInfoDtos;
   }
 
   public void changeFee(String studentName, int fee) {
-    // TODO: 과제 구현 부분
+    List<Course> courses = courseRepository.getCourseListByStudent(studentName);
+
+    // 수임료 변경 및 주말 1.5배 적용
   }
 }

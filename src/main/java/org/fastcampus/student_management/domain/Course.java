@@ -3,18 +3,17 @@ package org.fastcampus.student_management.domain;
 public class Course {
   private final Student student;
   private final String courseName;
-  private final int fee;
   private final DayOfWeek dayOfWeek;
   private final Long courseTime;
+  private final CourseFee fee;
 
   public Course(Student student, String courseName, int fee, DayOfWeek dayOfWeek, Long courseTime) {
-    if (student == null) {
+      if (student == null) {
       throw new IllegalArgumentException("학생은 필수 입력값입니다.");
     }
-
+    this.fee = new CourseFee(fee);
     this.student = student;
     this.courseName = courseName;
-    this.fee = fee;
     this.dayOfWeek = dayOfWeek;
     this.courseTime = courseTime;
   }
@@ -36,7 +35,11 @@ public class Course {
   }
 
   public int getFee() {
-    return fee;
+    return this.fee.getFee();
+  }
+
+  public void changeFee(int fee) {
+    this.fee.changeFee(fee);
   }
 
   public DayOfWeek getDayOfWeek() {
